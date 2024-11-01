@@ -1,10 +1,8 @@
 <template>
     <div>
-      <form @submit.prevent="submitForm">
-        <table>
-          <tr>
-            <td>Kode Barang</td>
-            <td>
+      <form @submit.prevent="submitForm" class="mb-3">
+        <div class="mb-3">
+          <label for="kode" class="form-label">Kode Barang</label>
               <input
                 type="text"
                 v-model="form.kode"
@@ -12,44 +10,42 @@
                 :disabled="isEdit"
                 required
               />
-            </td>
-          </tr>
-  
-          <tr>
-            <td>Nama Barang</td>
-            <td>
-              <input type="text" v-model="form.nama" id="nama" required />
-            </td>
-          </tr>
-  
-          <tr>
-            <td>Deskripsi</td>
-            <td>
+              <div class="mt-2">
+                <label for="nama" class="form-label">Nama Barang</label>
+              </div>
+              <input 
+              type="text" 
+              v-model="form.nama" 
+              id="nama" 
+              class="form-control" 
+              required />  
+
+              <div class="mt-2">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+              </div>
               <input
                 type="text"
                 v-model="form.deskripsi"
                 id="deskripsi"
+                class="form-control"
                 required
               />
-            </td>
-          </tr>
-  
-          <tr>
-            <td>Stok</td>
-            <td>
-              <input type="number" v-model="form.stok" id="stok" required />
-            </td>
-          </tr>
-  
-          <tr>
-            <td></td>
-            <td>
-              <button type="submit">
+
+              <div class="mt-2">
+                <label for="deskripsi" class="form-label">Stok</label>
+              </div>
+              <input 
+              type="number" 
+              v-model="form.stok" 
+              id="stok"
+              class="form-control" 
+              required 
+              />
+
+              <button type="submit" class="btn btn-success mt-3">
                 {{ isEdit ? "Simpan Perubahan" : "Tambah Barang" }}
               </button>
-            </td>
-          </tr>
-        </table>
+        </div>
       </form>
     </div>
   </template>
@@ -105,38 +101,40 @@ export default {
 </script>
 
 <style scoped>
-/* Gaya untuk tabel */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-/* Gaya untuk sel tabel */
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
+ .form{
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+ }
 
-/* Gaya untuk input teks dan number */
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
+ .mb-3 {
+  margin-bottom: 1rem;
+ }
 
-/* Gaya untuk tombol submit */
-button[type="submit"] {
+ .form label{
+  font-weight: bold;
+  color: #4b3f6b;
+ }
+
+ .form-control{
+  border-radius: 0.25rem;
+  border: 1px #ced4da;
+ }
+
+ .form-control:focus {
+  border-color: #4b3f6b;
+  box-shadow: 0 0 0 0.2rem rgba(75, 63, 107, 0.25);
+ }
+
+ .btn-success{
   background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  border-color: #4caf50;
+ }
 
-/* Gaya untuk tombol submit saat di-hover */
-button[type="submit"]:hover {
-  background-color: #45a049;
-}
+ .btn-success:hover{
+  background-color: #4caf50;
+  border-color: #4caf50;
+ }
 </style>

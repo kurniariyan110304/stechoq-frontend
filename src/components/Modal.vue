@@ -1,24 +1,34 @@
 <template>
-    <div v-if="visible" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-button" @click="$emit('close')">x</button>
-            <slot></slot>
-        </div>
+  <div v-if="visible" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-button" @click="$emit('close')">x</button>
+      <slot></slot>
+      <button class="form-close-button" @click="$emit('close')">Close</button>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        visible: {
-            type: Boolean,
-            default: false
-        }
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
     }
+  }
 };
 </script>
 
 <style scoped>
+
+.modal {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5)
+}
+
+.modal.show{
+  display: block;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -69,5 +79,28 @@ export default {
 
 .close-button:hover {
   color: #000;
+}
+
+.form-close-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 60px; /* Square size */
+  height: 35px; /* Square size */
+  background-color: grey;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-close-button:hover {
+  background-color: #d32f2f;
 }
 </style>

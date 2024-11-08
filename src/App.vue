@@ -24,10 +24,8 @@
           @edit-item="handleEditItem"
           @delete-item="handleDeleteItem"
         />
-        <component
-          :is="currentView"
-          v-else
-          :currentComponent="currentComponent"
+        <router-view 
+        :key="$route.fullpath" 
         />
       </div>
     </div>
@@ -48,12 +46,17 @@ export default {
     UserViews,
   },
   data() {
-    const params = new URLSearchParams(window.location.search);
     return {
-      currentRole: params.get("role") || "admin",
-      currentComponent: params.get("component") || "items",
-      isSidebarVisible: params.get("sidebar") !== "hidden",
+      currentRole: this.$route.name || "admin",
+      isSidebarVisible: true,
+      searchTerm: "",
     };
+  },
+
+  watch: {
+    '$route.name'(newRole) {
+      this.currentRole = newRole;
+    }
   },
   computed: {
     currentView() {
@@ -69,24 +72,11 @@ export default {
 
     navigateTo(component) {
       this.currentComponent = component;
-      this.updateURLParams();
+      this.$router.push({name: this.currentRole, params: {component}});
     },
 
     toggleSidebar() {
       this.isSidebarVisible = !this.isSidebarVisible;
-      this.updateURLParams();
-    },
-
-    updateURLParams() {
-      const params = new URLSearchParams();
-      params.set("role", this.currentRole);
-      params.set("component", this.currentComponent);
-      params.set("sidebar", this.isSidebarVisible ? "visible" : "hidden");
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${params}`
-      );
     },
   },
 

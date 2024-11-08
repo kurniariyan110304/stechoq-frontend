@@ -8,8 +8,8 @@
                 <thead>
                     <tr>
                         <th>Kode</th>
-                        <th>Nama Barang</th>
                         <th>Nama User</th>
+                        <th>Nama Barang</th>
                         <th>Tanggal Pinjam</th>
                         <th>Jumlah Pinjam</th>
                         <th>Tanggal Kembali</th>

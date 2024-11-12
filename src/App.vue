@@ -24,9 +24,8 @@
           @edit-item="handleEditItem"
           @delete-item="handleDeleteItem"
         />
-        <router-view 
-        :key="$route.fullpath" 
-        />
+
+        <router-view :key="$route.fullPath" />
       </div>
     </div>
   </div>
@@ -50,6 +49,7 @@ export default {
       currentRole: this.$route.name || "admin",
       isSidebarVisible: true,
       searchTerm: "",
+      currentComponent: null,
     };
   },
 
@@ -78,27 +78,23 @@ export default {
     toggleSidebar() {
       this.isSidebarVisible = !this.isSidebarVisible;
     },
+
+    handleSearch(newQuery) {
+      console.log("Search term:", newQuery);
+      if (this.currentRole === "admin") {
+        console.log("Search in admin items");
+      } else if (this.currentRole === "user") {
+        console.log("Search in user items");
+      }
+    },
+
+    mounted() {
+    EventBus.on("search", this.handleSearch);
   },
 
-  //   handleSearch(newQuery) {
-  //     console.log("Search term:", newQuery);
+  },
 
-  //     // Implementasi logika pencarian berdasarkan currentRole dan newQuery
-  //     if (this.currentRole === "admin") {
-  //       console.log("Search in admin items");
-  //     } else if (this.currentRole === "user") {
-  //       console.log("Search in user items");
-  //     }
-  //   },
-  // },
 
-  // mounted() {
-  //   EventBus.on("search", this.handleSearch);
-  // },
-
-  // beforeUnmount() {
-  //   EventBus.off("search", this.handleSearch);
-  // },
 };
 </script>
 

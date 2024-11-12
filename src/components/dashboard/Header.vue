@@ -63,6 +63,10 @@ export default {
             this.$emit("toggle-sidebar");
         },
 
+        emitSearch() {
+            EventBus.emit("search", this.search);
+        },
+
         logout() {
             localStorage.removeItem("auth");
             localStorage.removeItem("role");

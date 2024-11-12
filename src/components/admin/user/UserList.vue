@@ -1,30 +1,30 @@
 <template>
-    <div class="user-list">
-      <div class="header">
-        <h2>Daftar Pengguna</h2>
-        <button class="add-btn" @click="showAddForm">Tambah Pengguna</button>
-      </div>
-  
-      <div class="user-cards">
-        <UserCard
-          v-for="user in users"
-          :key="user.id"
-          :user="user"
-          @edit-user="editUser"
-          @delete-user="deleteUser"
-        />
-      </div>
-  
-      <Modal :visible="showForm" @close="cancelEditForm">
-        <UserForm
-          :user="selectedUser"
-          :isEdit="isEdit"
-          @submit="handleSubmit"
-          @cancel="cancelEditForm"
-        />
-      </Modal>
+  <div class="user-list">
+    <div class="header">
+      <h2>Daftar Pengguna</h2>
+      <button class="add-btn" @click="showAddForm">Tambah Pengguna</button>
     </div>
-  </template>
+
+    <div class="user-cards">
+      <UserCard
+        v-for="user in users"
+        :key="user.id"
+        :user="user"
+        @edit-user="editUser"
+        @delete-user="deleteUser"
+      />
+    </div>
+
+    <Modal :visible="showForm" @close="cancelEditForm">
+      <UserForm
+        :user="selectedUser"
+        :isEdit="isEdit"
+        @submit="handleSubmit"
+        @cancel="cancelEditForm"
+      />
+    </Modal>
+  </div>
+</template>
   
   <script>
   import UserCard from "@/components/admin/user/UserCard.vue";

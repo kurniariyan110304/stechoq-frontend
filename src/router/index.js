@@ -4,13 +4,21 @@ import UserView from "../views/UserViews.vue";
 import LoginViews from "@/views/LoginViews.vue";
 
 const routes = [
+
+  {
+    path: "/",
+    redirect: { name: "admin", params: { component: "items" } },
+  },
+
   {
     path: "/admin/:component?",
     name: "admin",
     component: AdminView,
-    props: true,
+    props: (route) => ({
+      currentComponent: route.params.component || "items",
+    }),
     meta: {
-      requiersAuth: AdminView,
+      requiersAuth: true,
       role: "admin",
     },
   },
@@ -18,9 +26,11 @@ const routes = [
     path: "/user/:component?",
     name: "user",
     component: UserView,
-    props: true,
+    props: (route) => ({
+      currentComponent: route.params.component || "items",
+    }),
     meta: {
-      requiersAuth: AdminView,
+      requiersAuth: true,
       role: "user",
     },
   },
@@ -29,10 +39,6 @@ const routes = [
     name: "login",
     component: LoginViews,
 
-  },
-  {
-    path: "/",
-    redirect: { name: "admin", params: { component: "items"}},
   },
 ];
 

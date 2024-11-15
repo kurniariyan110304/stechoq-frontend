@@ -92,6 +92,11 @@ export default {
     EventBus.on("search", this.handleSearch);
   },
 
+  beforeUnmount() {
+    EventBus.off("search", this.handleSearch);
+  },
+
+
   },
 
 

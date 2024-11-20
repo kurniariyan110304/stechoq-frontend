@@ -3,16 +3,24 @@
         <a class="logo">Simbok</a>
         <ul>
             <li v-if="currentRole === 'admin'">
-                <a href="#" @click.prevent="showComponent('users')" class="nav-link"><i class="bi bi-house-door"></i> Users</a>
+                <button @click="navigateTo('users')" class="nav-link">
+                    <i class="fas fa-home"></i> Users
+                </button>
             </li>
             <li>
-                <a href="#" @click.prevent="showComponent('items')" class="nav-link"><i class="bi bi-box"></i> Items</a>
+                <button @click="navigateTo('items')" class="nav-link">
+                    <i class="fas fa-box"></i> Items
+                </button>
             </li>
             <li>
-                <a href="#" @click.prevent="showComponent('transactions')" class="nav-link"><i class="bi bi-cash"></i> Transactions</a>
+                <button @click="navigateTo('transactions')" class="nav-link">
+                    <i class="fas fa-exchange-alt"></i> Transactions
+                </button>
             </li>
             <li v-if="currentRole === 'user'">
-                <a href="#" @click.prevent="showComponent('history')" class="nav-link"><i class="bi bi-clock-history"></i> History</a>
+                <button @click="navigateTo('history')" class="nav-link">
+                    <i class="fas fa-user"></i> History
+                </button>
             </li>
         </ul>
     </div>
@@ -31,11 +39,11 @@ export default {
         },
     },
     methods: {
-        showComponent(component) {
-            this.$emit("showComponent", component);
+        navigateTo(component) {
+            const baseRoute = this.currentRole === "admin" ? "admin" : "user";
+            this.$router.push({ name: baseRoute, params: { component } });
         },
     },
-    emits: ["showComponent"],
 };
 </script>
 
@@ -81,39 +89,22 @@ li {
     text-align: center;
 }
 
-a {
+button, a {
     color: white;
     text-decoration: none;
     cursor: pointer;
     display: flex;
     align-items: left;
-    margin-left: 20px;
-    padding: 10px 0;
+    padding: 10px 20px;
     transition: background-color 0.3s ease;
 }
 
-a:hover {
+button:hover {
     text-decoration: underline;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-a i {
+button i {
     margin-right: 8px;
-}
-
-.nav-link{
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
-    transition: background color 0.3s ease;
-
-    &:hover {
-        text-decoration: underline;
-        background-color: rgba(255, 255, 255, 0,1);
-    }
 }
 </style>

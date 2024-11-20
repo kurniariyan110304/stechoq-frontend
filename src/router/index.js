@@ -1,25 +1,42 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import AdminView from "../views/AdminViews.vue";
 import UserView from "../views/UserViews.vue";
-import LoginViews from "@/views/LoginViews.vue";
+import HomeView from "../views/HomeView.vue";
+
+import Login from "@/components/auth/Login.vue";
+import Register from "@/components/auth/Register.vue";
+import { useAuthStore } from "@/store/authStore";
 
 const routes = [
-
   {
     path: "/",
-    redirect: { name: "admin", params: { component: "items" } },
+    name: "home",
+    component: HomeView,
+    meta: { hideHeader: true, hideSidebar: true },
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: Login,
+      },
+      {
+        path: "register",
+        name: "register",
+        component: Register,
+      },
+    ],
   },
-
   {
     path: "/admin/:component?",
     name: "admin",
     component: AdminView,
     props: (route) => ({
-      currentComponent: route.params.component || "items",
+      currentComponent: route.params.component ?? "users",
     }),
-    meta: {
-      requiersAuth: true,
-      role: "admin",
+    meta: { 
+      requiresAuth: true, 
+      role: "ADMIN",
     },
   },
   {
@@ -27,43 +44,38 @@ const routes = [
     name: "user",
     component: UserView,
     props: (route) => ({
-      currentComponent: route.params.component || "items",
-    }),
-    meta: {
-      requiersAuth: true,
-      role: "user",
+      currentComponent: route.params.component ?? "items",
+    }),    
+    meta: { 
+      requiresAuth: true, 
+      role: "USER", 
     },
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: LoginViews,
-
-  },
+  },  
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem("auth");
-  const userRole = localStorage.getItem("role");
+  const authStore = useAuthStore();
+  const isAuthenticated = !!authStore.token;
+  const userRole = authStore.role;
 
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    alert("You need to log in to access this page.");
-    next({ name: "login" });
-  } else if (
-    to.meta.requiresAuth &&
-    isAuthenticated &&
-    to.meta.role !== userRole
-  ) {
-    alert("You do not have permission to access this page.");
-    next(false);
+  if (to.meta.requiresAuth) {
+    if (isAuthenticated) {
+      if (userRole === to.meta.role || to.meta.role === undefined) { 
+        next();
+      } else {
+        next({ name: "home" });
+      }
+    } else {
+      next({ name: "home" });
+    }
   } else {
     next();
-  }  
+  }
 });
 
 export default router;

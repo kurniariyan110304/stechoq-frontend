@@ -46,5 +46,13 @@
     margin: 5px 0;
     color: #555;
   }
+
+  .item-card .stock {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.item-card button {
+  transition: background-color 0.2s;
+}
   </style>
-  

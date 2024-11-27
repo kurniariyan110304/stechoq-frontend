@@ -61,7 +61,7 @@
 </template>
   
 <script>
-import axios from "@/plugins/axios";
+import { useUserStore } from "@/store/userStore";
 
 export default {
   props: {
@@ -118,6 +118,7 @@ export default {
     },
 
     async submitForm() {
+      const userStore = useUserStore();
       try {
         if (!this.isEdit && this.form.password !== this.form.confirmPassword) {
           this.form.error = "Passwords do not match";
@@ -136,10 +137,9 @@ export default {
         console.log("Sending data to server:", payload);
 
         if (this.isEdit) {
-          await axios.patch(`/users/${this.user.id}`, payload);
+          await userStore.updateUser({id: this.user.id, ...payload})
         } else {
-          const response = await axios.post("/users", payload);
-          console.log("User created:", response.data);
+          await userStore.addUser(payload)
         }
 
         this.$emit("submit", this.form);

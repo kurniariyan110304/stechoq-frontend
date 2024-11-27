@@ -26,11 +26,12 @@ export const useUserStore = defineStore('userStore', {
     },
 
     async updateUser(user) {
+      console.log("ID User", user.id);
       try {
         const response = await apiClient.patch(`/users/${user.id}`, user);
         const index = this.users.findIndex(u => u.id === user.id);
         if (index !== -1) {
-          this.users.splice(index, 1, response.data);
+          this.users.splice(index, 1, response.data.data);
         }
       } catch (error) {
         console.error('Failed to update user:', error);

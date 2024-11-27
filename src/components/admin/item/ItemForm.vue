@@ -12,13 +12,13 @@
               />
               <div class="mt-2">
                 <label for="nama" class="form-label">Nama Barang</label>
-              </div>
               <input 
               type="text" 
               v-model="form.nama" 
               id="nama" 
               class="form-control" 
               required />  
+            </div>
 
               <div class="mt-2">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
